@@ -52,6 +52,7 @@ class KMeansAssignment:
         self._gather_data()
         kmeans = KMeans(n_cluster)
         kmeans.fit(self.X)
+        elbow_fig = self._create_elbow(2, 10)
 
         centroids = kmeans.cluster_centers_
         labels = kmeans.labels_
@@ -59,7 +60,7 @@ class KMeansAssignment:
         print("Centroid coordinates: \n", centroids, "\n")
 
         colors = ["y.", "c.", "r."]
-
+        cluster_fig = plt.figure(figsize=(15, 5))
         for i in range(len(self.X)):
             print("Datapoint coordinate:", self.X[i], "label:", labels[i])
             plt.plot(self.X[i][0], self.X[i][1], colors[labels[i]], markersize=10)
@@ -68,7 +69,8 @@ class KMeansAssignment:
         plt.title("Kmeans Clusters")
         plt.ylabel("Width")
         plt.xlabel("Length")
-        plt.show()
+        plt.show(cluster_fig)
+        plt.show(elbow_fig)
 
     """Converts a txt file with data separated with tab(\t) to a csv file (comma separated values) and adds header
     :param path: the filename to be converted
@@ -82,3 +84,18 @@ class KMeansAssignment:
                 outf.write(regex.sub(",", line))
             inf.close()
             outf.close()
+
+    def _create_elbow(self, min, max):
+        distorsions = []
+        for k in range(min, max):
+            kmeans = KMeans(n_clusters=k)
+            kmeans.fit(self.X)
+            distorsions.append(kmeans.inertia_)
+
+        fig = plt.figure(figsize=(15, 5))
+        plt.plot(range(min, max), distorsions)
+        plt.grid(True)
+        plt.title('Elbow curve')
+        plt.xlabel('Clusters')
+        plt.ylabel('Sum of Squared Errors')
+        return fig
