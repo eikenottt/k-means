@@ -1,8 +1,1 @@
-15.26,14.84,0.871,5.763,3.312,2.221,5.22,1
-14.88,14.57,0.8811,5.554,3.333,1.018,4.956,1
-14.29,14.09,0.905,5.291,3.337,2.699,4.825,1
-13.84	13.94	0.8955	5.324	3.379	2.259	4.805	1
-16.14	14.99	0.9034	5.658	3.562	1.355	5.175	1
-14.38	14.21	0.8951	5.386	3.312	2.462	4.956	1
-14.69	14.49	0.8799	5.563	3.259	3.586	5.219	1
-14.11	14.1	0.8911	5.42	3.302	2.7		5		1
+The Mechelen Incident of 10 January 1940, also known as the Mechelen Affair, was an event which occurred in Belgium during the Phoney War in the first stages of World War II. A German aircraft with an officer on board carrying the plans for Fall Gelb (Case Yellow), the German attack on the Low Countries, crash-landed in neutral Belgium near Vucht in the modern-day municipality of Maasmechelen within the Province of Limburg. This prompted an immediate crisis in the Low Countries and amidst the French and British authorities, whom the Belgians notified of their discovery; however the crisis abated relatively quickly once the dates mentioned in the plans passed without incident. It has been argued that the incident led to a major change in the German attack plan, but this hypothesis has also been disputed.
