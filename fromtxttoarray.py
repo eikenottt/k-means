@@ -24,15 +24,6 @@ def fromtxttodata(path):
     return data
 
 
-def fromtabtocsv(path):
-
-    with open(path) as inf, open("seeds_dataset.csv", "w") as outf:
-        regex = re.compile(r"\t+", re.IGNORECASE)
-        for line in inf:
-            if not line.strip(): continue
-            outf.write(regex.sub(",",line))
-
-
 # fromtabtocsv("seeds_dataset.txt")
 
 #

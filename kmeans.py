@@ -1,59 +1,84 @@
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
+import os
+import re
 
 from matplotlib import style
-from sklearn import preprocessing
 from sklearn.cluster import KMeans
 
-from fromtxttoarray import fromtxttodata
 
-style.use("ggplot")
+class KMeansAssignment:
 
-data = pd.read_csv("seeds_dataset.csv")
+    _filepath = ""
+    X = None
 
-f1 = data['area'].values
-f2 = data['groove'].values
+    """Constructor
+    
+    :param filename: The name of the txt file with the dataset NOT containing '.txt'
+    
+    """
+    def __init__(self, filename):
+        self._filepath = filename
 
-X = np.array(list(zip(f1, f2)))
-plt.scatter(f1, f2, c="black", s=7)
-plt.show()
+    """Checks if the csv file already exists. If the file do not exist, run the function _from_tab_to_csv
+    
+    """
+    def _check_csv_file_(self):
+        if not os.path.isfile(self._filepath + ".csv"):
+            self._from_tab_to_csv(self._filepath + ".txt")
 
-# X = np.array(X)
+    """Gets the data from dataset
+    
+    """
+    def _gather_data(self):
+        self._check_csv_file_()
+        data = pd.read_csv(self._filepath + ".csv")
 
-# y = np.array(X[:, 7])
-#
-# print(y)
-#
-# # print(len(data))
-#
-# # data = [[1, 2, 4],
-# #         [5, 8, 6],
-# #         [1.5, 1.8, 1.6],
-# #         [8, 8, 7],
-# #         [1, 0.6, 8],
-# #         [9, 11, 8]]
-#
-# # X = np.array(data)
-#
-# kmeans = KMeans(n_clusters=2)
-# kmeans.fit(X)
-#
-# # plt.scatter(X[:, 0], X[:, 6])
-# # plt.show()
-#
-# centroids = kmeans.cluster_centers_
-# labels = kmeans.labels_
-# #
-# print(centroids)
-# print(labels)
-# #
-# colors = ["b.", "r.", "y.", "c.", "m.", "w.", "g.", "k."]
-#
-# for i in range(len(X)):
-#     print("coordiunate:", X[i], "label:", labels[i])
-#     plt.plot(X[i][0], X[i][6], colors[labels[i]], markersize=10)
-#
-# plt.scatter(centroids[:, 0], centroids[:, 6], marker="x", s=150, linewidths=5, zorder=10)
-#
-# plt.show()
+        # f1 = data['length'].values
+        # f2 = data['width'].values
+        #
+        # self.X = np.array(list(zip(f1, f2)))
+        self.X = np.array(data.drop(['label'], 1))
+
+
+    """Runs the alorithm and shows the result as a 2D graph
+    
+    :param n_cluster: Number of clusters to divide the dataset into
+    
+    """
+    def run_kmeans(self, n_cluster=3):
+        style.use("ggplot")
+        self._gather_data()
+        kmeans = KMeans(n_cluster)
+        kmeans.fit(self.X)
+
+        centroids = kmeans.cluster_centers_
+        labels = kmeans.labels_
+
+        print("Centroid coordinates: \n", centroids, "\n")
+
+        colors = ["y.", "c.", "r."]
+
+        for i in range(len(self.X)):
+            print("Datapoint coordinate:", self.X[i], "label:", labels[i])
+            plt.plot(self.X[i][0], self.X[i][1], colors[labels[i]], markersize=10)
+
+        plt.scatter(centroids[:, 0], centroids[:, 1], marker="x", s=150, linewidths=5, color='k', zorder=10)
+        plt.title("Kmeans Clusters")
+        plt.ylabel("Width")
+        plt.xlabel("Length")
+        plt.show()
+
+    """Converts a txt file with data separated with tab(\t) to a csv file (comma separated values) and adds header
+    :param path: the filename to be converted
+    """
+    def _from_tab_to_csv(self, path):
+        with open(path) as inf, open("seeds_dataset.csv", "w") as outf:
+            regex = re.compile(r"\t+", re.IGNORECASE)
+            outf.write("area,perimeter,compactness,length,width,asym,groove,label\n")
+            for line in inf:
+                if not line.strip(): continue
+                outf.write(regex.sub(",", line))
+            inf.close()
+            outf.close()
