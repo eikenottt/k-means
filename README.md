@@ -5,7 +5,7 @@ We are students and have little knowledge of the Python programming language.
 This project contains two classes: `KMeansAssignment` and `GaussianMixtureAssignment`.
 ## KMeansAssignment Class `kmeans.py`
 This class is the parent class of `GaussianMixtureAssignment`.
-It is designed to take a txt file with tab-separated `\t` values or a csv (comma separated values) file as an input.
+It is designed to take a `.txt` file with tab-separated `\t` values or a `.csv` (comma separated values) file as an input.
 We have not made a way to handle exceptions, so if the input file is not of a correct type, the program will crash.
 
 ## GaussianMixtureAssignment class `kmeans.py`
