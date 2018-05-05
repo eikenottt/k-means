@@ -1,5 +1,4 @@
-from kmeans import KMeansAssignment
-from gaussian_mixture import GaussianMixtureAssignment
+from kmeans import *
 
 kmeans = KMeansAssignment("seeds_dataset")
 kmeans.run_kmeans()
